@@ -26,10 +26,16 @@ const slice = createSlice({
         state.token = action.payload.token;
         state.isLoggedIn = true;
       })
+      .addCase(registerThunk.rejected, (state, action) => {
+        state.error = action.payload ?? "This email is already used!";
+      })
       .addCase(loginThunk.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
+      })
+      .addCase(loginThunk.rejected, (state, action) => {
+        state.error = action.payload ?? "Email or password is incorrect";
       })
       .addCase(logoutThunk.fulfilled, () => {
         return initialState;
