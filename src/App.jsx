@@ -1,10 +1,3 @@
-// import { useDispatch } from "react-redux";
-// import ContactForm from "./components/ContactForm/ContactForm";
-// import ContactList from "./components/ContactList/ContactList";
-// import SeachBox from "./components/SeachBox/SeachBox";
-// import { useEffect } from "react";
-// import { fetchData } from "./redux/contactsOps";
-
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import NotFound from "./pages/NotFound/NotFound";
@@ -12,34 +5,49 @@ import Layout from "./components/Layout/Layout";
 import ContactsPage from "./pages/ContactsPage/ContactsPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
-
-// function App() {
-//   const dispatch = useDispatch();
-//   useEffect(() => {
-//     dispatch(fetchData());
-//   }, [dispatch]);
-//   return (
-//     <div>
-//       <h1>Phonebook</h1>
-//       <ContactForm />
-//       <SeachBox />
-//       <ContactList />
-//     </div>
-//   );
-// }
-
-// export default App;
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { refreshUserThunk } from "./redux/auth/operations";
+import { selectIsRefreshing } from "./redux/auth/selectors";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import RestrictedRoute from "./components/RestrictedRoute/RestrictedRoute";
 
 const App = () => {
-  return (
+  const dispatch = useDispatch();
+  const isRefreshing = useSelector(selectIsRefreshing);
+  useEffect(() => {
+    dispatch(refreshUserThunk());
+  }, [dispatch]);
+  return isRefreshing ? null : (
     <div>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route path="contacts" element={<ContactsPage />} />
+          <Route
+            path="contacts"
+            element={
+              <PrivateRoute>
+                <ContactsPage />
+              </PrivateRoute>
+            }
+          />
         </Route>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegistrationPage />} />
+        <Route
+          path="/login"
+          element={
+            <RestrictedRoute>
+              <LoginPage />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <RestrictedRoute>
+              <RegistrationPage />
+            </RestrictedRoute>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

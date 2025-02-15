@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import s from "./SeachBox.module.css";
-import { changeContacts } from "../../redux/filtersSlice";
+import { changeContacts } from "../../redux/filters/slice";
 function SeachBox() {
   const dispatch = useDispatch();
   return (

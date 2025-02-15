@@ -1,7 +1,21 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import ContactForm from "../../components/ContactForm/ContactForm";
+import SeachBox from "../../components/SeachBox/SeachBox";
+import ContactList from "../../components/ContactList/ContactList";
+import { fetchData } from "../../redux/contacts/operation";
+
 const ContactsPage = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchData());
+  }, [dispatch]);
   return (
     <div>
-      <h2>Contacts Page</h2>
+      <h1>Phonebook</h1>
+      <ContactForm />
+      <SeachBox />
+      <ContactList />
     </div>
   );
 };
