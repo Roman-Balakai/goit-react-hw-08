@@ -1,5 +1,5 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { addContacts, deleteContacts, fetchData } from "./operation";
+import { addContacts, deleteContacts, fetchData } from "./operations";
 
 const initialState = {
   contacts: {
