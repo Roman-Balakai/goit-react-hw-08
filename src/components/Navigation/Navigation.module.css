@@ -1,9 +1,9 @@
-.authNav {
+.nav {
   display: flex;
   gap: 20px;
 }
 
-.authLink {
+.navLink {
   font-size: 16px;
   font-weight: 500;
   color: #007bff;
@@ -11,16 +11,15 @@
   transition: color 0.3s ease;
 }
 
-.authLink:hover {
+.navLink:hover {
   color: #0056b3;
 }
-
 @media (max-width: 768px) {
-  .authNav {
+  .nav {
     gap: 10px;
   }
 
-  .authLink {
+  .navLink {
     font-size: 14px;
   }
 }
